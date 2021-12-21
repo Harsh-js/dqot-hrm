@@ -7,6 +7,7 @@
           "@/middlewares/*":["middlewares/*"],
           "@/models/*":["models/*"],
           "@/store/*":["store/*"],
+          "@/modules/*":["modules/*"],
       }
   }
 }
