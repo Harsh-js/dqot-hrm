@@ -1,32 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
-import LeaveApply from "./LeaveApply";
+
 
 import  { useState } from "react";
 import DatePicker from "react-datepicker";
+import ApplyLeave from "components/Modal/ApplyLeave";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-// CSS Modules, react-datepicker-cssmodules.css
-// import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-
-// const Example = () => {
-//   const [startDate, setStartDate] = useState(new Date());
-//   return (
-//     <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-//   );
-// };
-
-
-// components
 
 import TableDropdown from "components/Dropdowns/TableDropdown.js";
 
+
 export default function Leavetable({ color }) {
   const [startdate, setStartDate] = useState(new Date());
-  const [showModal, setShowModal] = useState(false);
+  
   return (
     <>
+ <ApplyLeave />
+
       <div
         className={
           "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded " +
@@ -48,6 +40,7 @@ export default function Leavetable({ color }) {
               <button
               className="bg-lightBlue-500 blue-btn active:bg-lightBlue-300 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" 
               type="button"
+              onClick={() => setShowModal(true)}
             >
              Apply for Leave
             </button>
@@ -164,7 +157,11 @@ export default function Leavetable({ color }) {
           </table>
         </div>
       </div>
-      <LeaveApply />
+
+     
+
+
+     
     </>
   );
 }
