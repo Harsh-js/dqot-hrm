@@ -101,6 +101,11 @@ strong {
   font-weight: bolder;
 }
 
+/* custom-css */
+.date-heading {
+  width: 184px;
+}
+
 /**
 1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)
 2. Correct the odd 'em' font sizing in all browsers.
@@ -454,7 +459,14 @@ a {
   color: inherit;
   text-decoration: inherit;
 }
-
+.blue-btn {
+  width: 100%;
+  max-width: 160px;
+  background: linear-gradient(to left, #089e7b, #01755a);
+}
+.blue-btn:hover {
+  opacity: 0.7;
+}
 /**
  * Reset form element properties that are easy to forget to
  * style explicitly so you don't inadvertently introduce
