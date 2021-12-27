@@ -27,8 +27,9 @@ import {
 	LeaveTypeAtom,
 	WeekDaysAtom,
 } from "@/store/other";
+import { ApplyLeaveRoute } from "network/misc";
 const DTypes = ["Full Day", "First Half", "Sec. Half"];
-export default function Leavetable({ color }) {
+export default function Leavetable({ color, user, leaveData }) {
 	const [startdate, setStartDate] = useState(new Date());
 	const [enddate, setEndDate] = useState(new Date());
 	const [showModal, setShowModal] = useRecoilState(ModalAtom);
@@ -75,13 +76,6 @@ export default function Leavetable({ color }) {
 		) {
 			setDay(days - 0.5);
 		}
-		console.log({
-			from: { date: fromDate, ltype: fromType, day: weekdays[fromDay] },
-			to: { date: toDate, ltype: toType, day: weekdays[toDay] },
-			reason: reason,
-			day: day,
-			type: type,
-		});
 	};
 
 	useEffect(() => {
@@ -134,7 +128,7 @@ export default function Leavetable({ color }) {
 											? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
 											: "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
 									}>
-									Leave Type
+									From
 								</th>
 								<th
 									className={
@@ -143,16 +137,7 @@ export default function Leavetable({ color }) {
 											? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
 											: "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
 									}>
-									Half/Full Day
-								</th>
-								<th
-									className={
-										"px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-										(color === "light"
-											? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-											: "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
-									}>
-									Number Of Days
+									To
 								</th>
 								<th
 									className={
@@ -170,7 +155,7 @@ export default function Leavetable({ color }) {
 											? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
 											: "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
 									}>
-									Status
+									Reason
 								</th>
 								<th
 									className={
@@ -179,37 +164,76 @@ export default function Leavetable({ color }) {
 											? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
 											: "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
 									}>
-									Action Status
+									Type
+								</th>
+								<th
+									className={
+										"px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+										(color === "light"
+											? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+											: "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
+									}>
+									Status
 								</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<th className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center'>
-									<span
-										className={
-											"font-bold " +
-											+(color === "light" ? "text-blueGray-600" : "text-white")
-										}>
-										Dec 14,2021
-									</span>
-								</th>
-								<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
-									09:30:00
-								</td>
-								<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
-									20:03:00
-								</td>
-								<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
-									10:33
-								</td>
-								<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
-									No
-								</td>
-								<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
-									No
-								</td>
-							</tr>
+							{leaveData?.map(
+								({
+									approved,
+									day,
+									from,
+									id,
+									reason,
+									to,
+									type,
+									updatedAt,
+									_id,
+								}) => {
+									return (
+										<tr>
+											<th className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center'>
+												<span
+													className={
+														"font-bold " +
+														+(color === "light"
+															? "text-blueGray-600"
+															: "text-white")
+													}>
+													{`${moment(from.date, "DD/MM/YYYY").format(
+														"MMM-DD-YYYY"
+													)} / ${from.day.substring(0, 3)}`}
+												</span>
+											</th>
+											<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
+												<span
+													className={
+														"font-bold " +
+														+(color === "light"
+															? "text-blueGray-600"
+															: "text-white")
+													}>
+													{`${moment(to.date, "DD/MM/YYYY").format(
+														"MMM-DD-YYYY"
+													)} / ${to.day.substring(0, 3)}`}
+												</span>
+											</td>
+											<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
+												{day}
+											</td>
+											<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
+												{reason}
+											</td>
+											<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
+												{type}
+											</td>
+											<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
+												{approved ? "Approved" : "Pending"}
+											</td>
+										</tr>
+									);
+								}
+							)}
 						</tbody>
 					</table>
 				</div>
@@ -398,7 +422,28 @@ export default function Leavetable({ color }) {
 									<div className=' py-3 bg-gray-50 text-right sm:px-6'>
 										<button
 											type='submit'
-											className='inline-flex bg-indigo-500 blue-btn justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
+											className='inline-flex bg-indigo-500 blue-btn justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+											onClick={(e) => {
+												e.preventDefault();
+												ApplyLeaveRoute({
+													body: {
+														from: {
+															date: fromDate,
+															ltype: fromType,
+															day: weekdays[fromDay],
+														},
+														to: {
+															date: toDate,
+															ltype: toType,
+															day: weekdays[toDay],
+														},
+														reason: reason,
+														day: day,
+														type: type,
+													},
+													user,
+												});
+											}}>
 											Apply
 										</button>
 									</div>

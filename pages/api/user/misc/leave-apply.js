@@ -77,4 +77,32 @@ handler.post(async (req, res) => {
 	}
 });
 
+handler.get(async (req, res) => {
+	try {
+		const leaves = await Leave.find({});
+
+		if (!leaves) {
+			return res.json({
+				status: false,
+				message: "No Leave Found",
+				data: null,
+			});
+		}
+
+		return res.json({
+			status: true,
+			message: "Leaves got Succesfully",
+			data: leaves,
+		});
+	} catch (err) {
+		console.log(err);
+
+		return res.json({
+			status: false,
+			message: "Error",
+			data: err,
+		});
+	}
+});
+
 export default handler;

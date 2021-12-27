@@ -15,6 +15,6 @@ import { atom } from "recoil";
 
 // this is an example state atom
 export const userStateAtom = atom({
-	key: "orderState",
+	key: "userState",
 	default: "",
 });
