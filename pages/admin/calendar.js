@@ -3,19 +3,19 @@
 // components
 
 import withAuth from "@/helpers/pages/AuthRoute";
-import MapExample from "components/Maps/MapExample.js";
+import Calendar from "components/Calender_s/Calendar";
 
 // layout for page
 
 import Admin from "layouts/Admin.js";
 
-function Maps() {
+function Calendars() {
 	return (
 		<>
 			<div className='flex flex-wrap'>
 				<div className='w-full px-4'>
 					<div className='relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded'>
-						HI
+						<Calendar/>
 					</div>
 				</div>
 			</div>
@@ -23,7 +23,7 @@ function Maps() {
 	);
 }
 
-const Page = withAuth(Maps);
+const Page = withAuth(Calendars);
 Page.layout = Admin;
 
 export default Page;
