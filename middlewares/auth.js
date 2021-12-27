@@ -6,7 +6,7 @@ import Jwt from "jsonwebtoken";
 const auth = async function (req, res, next) {
 	const { authorization } = req.headers;
 	if (!authorization) {
-		return res.status(422).json({
+		return res.json({
 			status: false,
 			message: "No Token Found",
 			data: null,
@@ -16,7 +16,7 @@ const auth = async function (req, res, next) {
 	const token = authorization.replace("Bearer ", "");
 	Jwt.verify(token, jwtSecret, async (err, payload) => {
 		if (err) {
-			return res.status(422).json({
+			return res.json({
 				status: false,
 				message: "Invalid token",
 				data: null,
@@ -28,7 +28,7 @@ const auth = async function (req, res, next) {
 		const user = await User.findById(_id);
 
 		if (!user) {
-			return res.status(422).json({
+			return res.json({
 				status: false,
 				message: "Invalid User",
 				data: null,

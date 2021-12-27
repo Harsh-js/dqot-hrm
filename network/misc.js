@@ -4,7 +4,7 @@ import axios from "axios";
 import { baseUrl } from "@/configs/index";
 import Joi from "joi";
 import { toast } from "react-toastify";
-axios.defaults.baseURL = `${baseUrl}/user/auth/`;
+axios.defaults.baseURL = `${baseUrl}/user/misc/`;
 
 export const SignUpRoute = async ({ body, checked }) => {
 	try {

@@ -4,17 +4,20 @@
  * @format
  */
 
-import React, { useEffect } from "react";
-import Link from "next/link";
+import { useEffect } from "react";
 
-import IndexNavbar from "components/Navbars/IndexNavbar.js";
-import Footer from "components/Footers/Footer.js";
 import { useRouter } from "next/router";
+import withAuth from "@/helpers/pages/AuthRoute";
+import Admin from "layouts/Admin";
 
-export default function Index() {
+function Index() {
 	const router = useRouter();
 	useEffect(() => {
 		router.push("/admin/dashboard");
 	}, []);
-	return <h1>Hi</h1>;
+	return <p>Hi</p>;
 }
+const Page = withAuth(Index);
+Page.layout = Admin;
+
+export default Page;

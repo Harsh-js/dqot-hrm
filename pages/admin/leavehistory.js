@@ -1,27 +1,30 @@
-import React from "react";
+/** @format */
 
 // components
 
+import withAuth from "@/helpers/pages/AuthRoute";
 import Leavetable from "components/Cards/Leavetable";
 
 // layout for page
 
 import Admin from "layouts/Admin.js";
 
-export default function Leavehistory() {
-  return (
-    <>
-      <div className="flex flex-wrap mt-4">
-        <div className="w-full mb-12 px-4">
-          <Leavetable />
-          
-        </div>
-        {/* <div className="w-full mb-12 px-4">
+function Leavehistory() {
+	return (
+		<>
+			<div className='flex flex-wrap mt-4'>
+				<div className='w-full mb-12 px-4'>
+					<Leavetable />
+				</div>
+				{/* <div className="w-full mb-12 px-4">
           <CardTable color="dark" />
         </div> */}
-      </div>
-    </>
-  );
+			</div>
+		</>
+	);
 }
 
-Leavehistory.layout = Admin;
+const Page = withAuth(Leavehistory);
+Page.layout = Admin;
+
+export default Page;

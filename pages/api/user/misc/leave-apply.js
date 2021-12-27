@@ -28,7 +28,7 @@ handler.post(async (req, res) => {
 	}).validate(req.body);
 
 	if (Schema.error) {
-		return res.status(422).json({
+		return res.json({
 			status: false,
 			message: Schema.error.message,
 			data: null,
@@ -37,7 +37,7 @@ handler.post(async (req, res) => {
 
 	const { from, to, reason, day, type, leaveId } = Schema.value;
 
-	let Lid = `${req.user.name}_${Date.now()}`;
+	let Lid = `${req.user.name}_${Date.now()}`.replaceAll(" ", "");
 
 	if (leaveId) {
 		Lid = leaveId;
@@ -63,13 +63,13 @@ handler.post(async (req, res) => {
 	);
 	if (leave) {
 		if (leaveId) {
-			return res.status(200).json({
+			return res.json({
 				status: true,
 				message: "Leave Updated Succesfully",
 				data: leave,
 			});
 		}
-		return res.status(200).json({
+		return res.json({
 			status: true,
 			message: "Leave Appllied Succesfully",
 			data: leave,

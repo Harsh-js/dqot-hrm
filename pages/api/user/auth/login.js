@@ -27,7 +27,7 @@ handler.post(async (req, res) => {
 		}).validate(req.body);
 
 		if (Schema.error) {
-			return res.status(422).json({
+			return res.json({
 				status: false,
 				message: Schema.error.message,
 				data: null,
@@ -37,7 +37,7 @@ handler.post(async (req, res) => {
 		const { name, mobile, email, designation, otp } = Schema.value;
 
 		if (email.split("@")[1] !== "dqotsolutions.com") {
-			return res.status(422).json({
+			return res.json({
 				status: false,
 				message: "You are not a company employee",
 				data: null,
@@ -63,7 +63,7 @@ handler.post(async (req, res) => {
 		user.otp = "";
 		user.save();
 
-		return res.status(200).json({
+		return res.json({
 			status: true,
 			message: "Logged in Succesfully",
 			data: user,
@@ -86,7 +86,7 @@ handler.get(async (req, res) => {
 		}).validate(req.query);
 
 		if (Schema.error) {
-			return res.status(422).json({
+			return res.json({
 				status: false,
 				message: Schema.error.message,
 				data: null,
@@ -113,7 +113,7 @@ handler.get(async (req, res) => {
 		user.otp = "";
 		user.save();
 
-		return res.status(200).json({
+		return res.json({
 			status: true,
 			message: "Logged in Succesfully",
 			data: user,

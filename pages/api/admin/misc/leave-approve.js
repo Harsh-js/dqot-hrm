@@ -24,7 +24,7 @@ handler.get(async (req, res) => {
 	}).validate(req.query);
 
 	if (Schema.error) {
-		return res.status(422).json({
+		return res.json({
 			status: false,
 			message: Schema.error.message,
 			data: null,
@@ -42,13 +42,13 @@ handler.get(async (req, res) => {
 	);
 
 	if (!leave) {
-		return res.status(402).json({
+		return res.json({
 			status: false,
 			message: "Leave not Found",
 			data: null,
 		});
 	}
-	return res.status(200).json({
+	return res.json({
 		status: true,
 		message: "Leave Approved",
 		data: leave,

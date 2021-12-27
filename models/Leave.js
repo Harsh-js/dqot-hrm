@@ -14,12 +14,12 @@ const LeaveSchema = new mongoose.Schema(
 		},
 		from: {
 			date: String,
-			time: String,
+			ltype: String,
 			day: String,
 		},
 		to: {
 			date: String,
-			time: String,
+			ltype: String,
 			day: String,
 		},
 		approved: {

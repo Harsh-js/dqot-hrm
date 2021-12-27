@@ -30,7 +30,7 @@ handler.post(async (req, res) => {
 	//05:29:14
 
 	if (Schema.error) {
-		return res.status(422).json({
+		return res.json({
 			status: false,
 			message: Schema.error.message,
 			data: null,
@@ -47,7 +47,7 @@ handler.post(async (req, res) => {
 			date: date,
 		});
 		if (_attandance.start) {
-			return res.status(402).json({
+			return res.json({
 				status: false,
 				message: "Already Checked in",
 				data: _attandance,
@@ -58,7 +58,7 @@ handler.post(async (req, res) => {
 		_attandance.date = date;
 		_attandance.day = day;
 		_attandance.save();
-		return res.status(200).json({
+		return res.json({
 			status: true,
 			message: "Checkin Succesfully",
 			data: _attandance,
@@ -82,7 +82,7 @@ handler.post(async (req, res) => {
 		);
 
 		if (attandance) {
-			return res.status(200).json({
+			return res.json({
 				status: true,
 				message: "CheckOut Succesfully",
 				data: attandance,

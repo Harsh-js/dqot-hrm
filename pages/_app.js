@@ -1,6 +1,5 @@
 /** @format */
 
-import React from "react";
 import ReactDOM from "react-dom";
 import App from "next/app";
 import Head from "next/head";
@@ -11,6 +10,9 @@ import PageChange from "components/PageChange/PageChange.js";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "styles/tailwind.css";
+import "react-toastify/dist/ReactToastify.css";
+
+import { ToastContainer } from "react-toastify";
 
 Router.events.on("routeChangeStart", (url) => {
 	console.log(`Loading: ${url}`);
@@ -46,6 +48,7 @@ function MyApp({ Component, pageProps }) {
 			<Layout>
 				<Component {...pageProps} />
 			</Layout>
+			<ToastContainer />
 		</RecoilRoot>
 	);
 }
