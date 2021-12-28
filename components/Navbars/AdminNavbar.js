@@ -31,7 +31,7 @@ export default function Navbar() {
 					<div
 						className='lg:flex flex-grow items-center'
 						id='example-navbar-warning'>
-						<ul className='flex flex-col lg:flex-row list-none ml-auto'>
+						<ul className='flex flex-col lg:flex-row list-none ml-auto desktop-btn'>
 							<li className='nav-item'>
 								<a
 									className='px-4 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75 bg-red-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-3 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
