@@ -48,3 +48,8 @@ export const TimeModalAtom = atom({
 	key: "TimeModalAtom",
 	default: false,
 });
+
+export const CalModalAtom = atom({
+	key: "CalModalAtom",
+	default: false,
+});

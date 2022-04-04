@@ -1,5 +1,5 @@
 /** @format */
 
 module.exports = {
-	baseUrl: "http://192.168.0.115:3000/api",
+	baseUrl: "http://localhost:3000/api",
 };

@@ -10,12 +10,13 @@ import { useRecoilState } from "recoil";
 import { LoginOtpRoute, LoginRoute } from "network/auth";
 import { userStateAtom } from "@/store/user";
 import { useRouter } from "next/router";
+import withAuth from "@/helpers/pages/AuthRoute";
 
-export default function Login() {
+function Login() {
 	let [sign, setSign] = useRecoilState(LoginAtom);
 	let data = JSON.parse(JSON.stringify(sign));
 	let [status, setStatus] = useRecoilState(loginStatusAtom);
-	let [user, setUser] = useRecoilState(userStateAtom);
+
 	const router = useRouter();
 
 	return (
@@ -136,4 +137,7 @@ export default function Login() {
 	);
 }
 
-Login.layout = Auth;
+const Page = withAuth(Login);
+Page.layout = Auth;
+
+export default Page;

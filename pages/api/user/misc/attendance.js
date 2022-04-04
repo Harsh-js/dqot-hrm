@@ -38,15 +38,17 @@ handler.post(async (req, res) => {
 	}
 
 	const { start, end, type } = Schema.value;
-	const date = moment().format("YYYY-MM-DD");
+	const date = moment().format("DD/MM/YYYY");
 	const day = moment().format("dddd");
 
 	if (type === "start") {
-		const _attandance = await Attendance.findOne({
+		const _attandance = await Attendance.create({
 			employee: req.user._id,
 			date: date,
+			day,
+			start,
 		});
-		if (_attandance.start) {
+		if (!_attandance) {
 			return res.json({
 				status: false,
 				message: "Already Checked in",
@@ -54,13 +56,9 @@ handler.post(async (req, res) => {
 			});
 		}
 
-		_attandance.start = start;
-		_attandance.date = date;
-		_attandance.day = day;
-		_attandance.save();
 		return res.json({
 			status: true,
-			message: "Checkin Succesfully",
+			message: "Checked in Succesfully",
 			data: _attandance,
 		});
 	} else if (type === "end") {
@@ -90,11 +88,30 @@ handler.post(async (req, res) => {
 		}
 	}
 });
+
 handler.get(async (req, res) => {
 	try {
-		const attandance = await Attendance.find();
+		// console.log(moment().format("hh:mm:ss"));
+		// console.log(moment().format("YYYY-MM-DD-dddd"));
+		//05:29:14
+
+		const attandance = await Attendance.findOne({
+			employee: req.user._id,
+			date: moment().format("DD/MM/YYYY"),
+		});
+
+		return res.json({
+			status: true,
+			message: "Attendance got Succesfully",
+			data: attandance,
+		});
 	} catch (e) {
-		conso;
+		console.log(e);
+		return res.json({
+			status: false,
+			message: "Error",
+			data: e,
+		});
 	}
 });
 

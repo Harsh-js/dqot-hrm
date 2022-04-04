@@ -44,6 +44,7 @@ export default function Leavetable({ color, user, leaveData }) {
 	const weekdays = useRecoilValue(WeekDaysAtom);
 	const [toDay, setToDay] = useRecoilState(LeaveToDay);
 	const [leaveid, setLeaveId] = useRecoilState(LeaveLeaveIdAtom);
+	const [filter, setFilter] = useState("");
 
 	useEffect(() => {
 		if (fromDate == toDate) {
@@ -104,7 +105,10 @@ export default function Leavetable({ color, user, leaveData }) {
 									className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block  shadow-sm sm:text-sm border-gray-300 rounded-md react-datepicker-ignore-onclickoutside'
 									dateFormat={"dd/MM/yyyy"}
 									selected={startdate}
-									onChange={(date) => setStartDate(date)}
+									onChange={(date) => {
+										setStartDate(date);
+										setFilter(date.toLocaleDateString());
+									}}
 								/>
 								<button
 									className='bg-lightBlue-500 blue-btn active:bg-lightBlue-300 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150'
@@ -178,62 +182,70 @@ export default function Leavetable({ color, user, leaveData }) {
 							</tr>
 						</thead>
 						<tbody>
-							{leaveData?.map(
-								({
-									approved,
-									day,
-									from,
-									id,
-									reason,
-									to,
-									type,
-									updatedAt,
-									_id,
-								}) => {
-									return (
-										<tr>
-											<th className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center'>
-												<span
-													className={
-														"font-bold " +
-														+(color === "light"
-															? "text-blueGray-600"
-															: "text-white")
-													}>
-													{`${moment(from.date, "DD/MM/YYYY").format(
-														"MMM-DD-YYYY"
-													)} / ${from.day.substring(0, 3)}`}
-												</span>
-											</th>
-											<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
-												<span
-													className={
-														"font-bold " +
-														+(color === "light"
-															? "text-blueGray-600"
-															: "text-white")
-													}>
-													{`${moment(to.date, "DD/MM/YYYY").format(
-														"MMM-DD-YYYY"
-													)} / ${to.day.substring(0, 3)}`}
-												</span>
-											</td>
-											<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
-												{day}
-											</td>
-											<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
-												{reason}
-											</td>
-											<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
-												{type}
-											</td>
-											<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
-												{approved ? "Approved" : "Pending"}
-											</td>
-										</tr>
-									);
-								}
-							)}
+							{leaveData
+								?.filter((f) => {
+									if (filter) {
+										return f.from.date == filter;
+									} else {
+										return f;
+									}
+								})
+								.map(
+									({
+										approved,
+										day,
+										from,
+										id,
+										reason,
+										to,
+										type,
+										updatedAt,
+										_id,
+									}) => {
+										return (
+											<tr>
+												<th className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center'>
+													<span
+														className={
+															"font-bold " +
+															+(color === "light"
+																? "text-blueGray-600"
+																: "text-white")
+														}>
+														{`${moment(from.date, "DD/MM/YYYY").format(
+															"MMM-DD-YYYY"
+														)} / ${from.day.substring(0, 3)}`}
+													</span>
+												</th>
+												<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
+													<span
+														className={
+															"font-bold " +
+															+(color === "light"
+																? "text-blueGray-600"
+																: "text-white")
+														}>
+														{`${moment(to.date, "DD/MM/YYYY").format(
+															"MMM-DD-YYYY"
+														)} / ${to.day.substring(0, 3)}`}
+													</span>
+												</td>
+												<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
+													{day}
+												</td>
+												<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
+													{reason}
+												</td>
+												<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
+													{type}
+												</td>
+												<td className='border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
+													{approved ? "Approved" : "Pending"}
+												</td>
+											</tr>
+										);
+									}
+								)}
 						</tbody>
 					</table>
 				</div>
@@ -390,7 +402,7 @@ export default function Leavetable({ color, user, leaveData }) {
 													Number Of Days
 												</label>
 												<input
-													type='text'
+													type='number'
 													name='street-address'
 													id='street-address'
 													autoComplete='street-address'
@@ -442,6 +454,10 @@ export default function Leavetable({ color, user, leaveData }) {
 														type: type,
 													},
 													user,
+												}).then((res) => {
+													if (res.status) {
+														setShowModal(false);
+													}
 												});
 											}}>
 											Apply

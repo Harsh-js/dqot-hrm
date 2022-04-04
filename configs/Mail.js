@@ -1,6 +1,6 @@
 /** @format */
 
 module.exports = {
-	user: "harsh.dqot@gmail.com",
-	pass: "dqot@123",
+	user: "hrm.dqot@gmail.com",
+	pass: "Admin@123",
 };

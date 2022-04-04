@@ -79,7 +79,7 @@ handler.post(async (req, res) => {
 
 handler.get(async (req, res) => {
 	try {
-		const leaves = await Leave.find({});
+		const leaves = await Leave.find({ employee: req.user._id });
 
 		if (!leaves) {
 			return res.json({

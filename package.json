@@ -6,6 +6,9 @@
 	"repository": "https://github.com/creativetimofficial/notus-nextjs",
 	"license": "MIT",
 	"dependencies": {
+		"@capacitor/android": "^3.3.3",
+		"@capacitor/cli": "^3.3.3",
+		"@capacitor/core": "^3.3.3",
 		"@fortawesome/fontawesome-free": "5.15.3",
 		"@popperjs/core": "2.9.1",
 		"@tailwindcss/forms": "0.2.1",
@@ -40,7 +43,9 @@
 		"dev": "next dev",
 		"dev2": "nodemon -w server.js server.js",
 		"install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm run build:tailwind && npm run dev",
-		"build:tailwind": "tailwind build styles/index.css -o styles/tailwind.css"
+		"build:tailwind": "tailwind build styles/index.css -o styles/tailwind.css",
+		"build-mobile": "next build && next export && npx cap sync",
+		"andro": "CAPACITOR_ANDROID_STUDIO_PATH=/snap/bin/android-studio npx cap open android"
 	},
 	"eslintConfig": {
 		"extends": "react-app"

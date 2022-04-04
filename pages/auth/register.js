@@ -9,7 +9,8 @@ import Auth from "layouts/Auth.js";
 import { SignUpOtpRoute, SignUpRoute } from "network/auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
-export default function Register() {
+import withAuth from "@/helpers/pages/AuthRoute";
+function Register() {
 	let [sign, setSign] = useRecoilState(SignupAtom);
 	let [checked, setChecked] = useRecoilState(checkedAtom);
 	let [status, setStatus] = useRecoilState(signUpStatusAtom);
@@ -218,4 +219,7 @@ export default function Register() {
 	);
 }
 
-Register.layout = Auth;
+const Page = withAuth(Register);
+Page.layout = Auth;
+
+export default Page;

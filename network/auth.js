@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 axios.defaults.baseURL = `${baseUrl}/user/auth/`;
 
 export const SignUpRoute = async ({ body, checked }) => {
+	axios.defaults.baseURL = `${baseUrl}/user/auth/`;
+
 	try {
 		if (!checked) {
 			return toast.error("Please agree with our policy");
@@ -29,7 +31,7 @@ export const SignUpRoute = async ({ body, checked }) => {
 		const data = Schema.value;
 
 		const response = await axios.post("otp", data);
-
+		console.log(response)
 		if (response.data.status) {
 			console.log(response.data);
 			toast(response.data.message);
@@ -45,6 +47,8 @@ export const SignUpRoute = async ({ body, checked }) => {
 };
 
 export const SignUpOtpRoute = async ({ body, checked }) => {
+	axios.defaults.baseURL = `${baseUrl}/user/auth/`;
+
 	try {
 		if (!checked) {
 			return toast.error("Please agree with our policy");
@@ -84,6 +88,8 @@ export const SignUpOtpRoute = async ({ body, checked }) => {
 };
 
 export const LoginRoute = async ({ body }) => {
+	axios.defaults.baseURL = `${baseUrl}/user/auth/`;
+
 	try {
 		// delete body["otp"];
 		const Schema = Joi.object({
@@ -114,6 +120,8 @@ export const LoginRoute = async ({ body }) => {
 };
 
 export const LoginOtpRoute = async ({ body }) => {
+	axios.defaults.baseURL = `${baseUrl}/user/auth/`;
+
 	try {
 		// delete body["otp"];
 		const Schema = Joi.object({

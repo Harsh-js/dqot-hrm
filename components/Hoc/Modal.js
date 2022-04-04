@@ -1,8 +1,13 @@
 /** @format */
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { CheckModalAtom, ModalAtom, TimeModalAtom } from "@/store/recoil";
+import {
+	CalModalAtom,
+	CheckModalAtom,
+	ModalAtom,
+	TimeModalAtom,
+} from "@/store/recoil";
 
 function HOCMOdal({ children, type, title }) {
 	let Atom;
@@ -10,10 +15,26 @@ function HOCMOdal({ children, type, title }) {
 		Atom = CheckModalAtom;
 	} else if (type == "Leave") {
 		Atom = ModalAtom;
-	} else if ((type = "time_card")) {
+	} else if (type == "time_card") {
 		Atom = TimeModalAtom;
+	} else if (type == "Calendar") {
+		Atom = CalModalAtom;
 	}
 	const [showModal, setShowModal] = useRecoilState(Atom);
+
+	useEffect(() => {
+		const handleEsc = (event) => {
+			if (event.keyCode === 27) {
+				setShowModal(false);
+			}
+		};
+		window.addEventListener("keydown", handleEsc);
+
+		return () => {
+			window.removeEventListener("keydown", handleEsc);
+		};
+	}, []);
+
 	return (
 		<div
 			className='ShareModalOut'
